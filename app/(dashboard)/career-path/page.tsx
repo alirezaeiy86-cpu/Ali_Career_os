@@ -7,9 +7,9 @@ export default async function RoadmapPage() {
   const session = await auth();
   if (!session) redirect("/login");
   
-
+  if (!session.user?.id) return;
   const roadmapData = await db.roadmap.findUnique({
-    where: { userId: session.user.id! }
+    where: { userId: session.user.id }
   });
 
   // ا
