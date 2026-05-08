@@ -13,11 +13,14 @@ export default async function AnalysisReport({ params }: { params: { id: string 
   if (!session) redirect("/login");
   const {id} = await params;
 
+
   // Get Data from database
+  if (!session.user?.id) return;
   const resume = await db.resume.findUnique({
+    
     where: { 
         id: id,
-        userId: session.user.id 
+        userId: session.user.id
     },
   });
 
