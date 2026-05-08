@@ -6,9 +6,10 @@ import RoadmapClient from "./roadmap-client";
 export default async function RoadmapPage() {
   const session = await auth();
   if (!session) redirect("/login");
+  
 
   const roadmapData = await db.roadmap.findUnique({
-    where: { userId: session.user.id }
+    where: { userId: session.user.id! }
   });
 
   // ا
