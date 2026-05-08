@@ -129,7 +129,7 @@ export default function CVBuilderPage() {
                       </div>
                     </div>
                     <div className="w-32 h-32 md:w-44 md:h-44 rounded-[2rem] border-[4px] md:border-[6px] border-white/20 md:border-black p-1 shadow-2xl overflow-hidden grayscale hover:grayscale-0 transition-all duration-700">
-                       <img src={session?.user?.image} className="w-full h-full object-cover rounded-[1.8rem]" alt="Profile" />
+                       <img src={session?.user?.image!} className="w-full h-full object-cover rounded-[1.8rem]" alt="Profile" />
                     </div>
                   </header>
 
