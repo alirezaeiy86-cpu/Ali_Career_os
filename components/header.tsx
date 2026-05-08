@@ -55,7 +55,7 @@ export  const  Navbar = ({user:propUser}:UserProps) => {
             </div>
             <div className="w-10 h-10 rounded-xl bg-linear-to-tr from-purple-600 to-indigo-600 p-[1px]">
                 <div className="w-full h-full bg-[#020205] rounded-[11px] overflow-hidden">
-                    <img src={currentUser.image || "/default-avatar.png"} alt="User" />
+                    <img src={currentUser!.image || "/default-avatar.png"} alt="User" />
                 </div>
             </div>
               <button className="py-2 px-3  border-none
