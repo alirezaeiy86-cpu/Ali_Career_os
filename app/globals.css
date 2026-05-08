@@ -1,26 +1,160 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme {
+  /* متغیرهای رنگی پایه برای ترند ۲۰۲۶ */
+  --color-background: #000000;
+  --color-foreground: #ffffff;
+  --color-zenith-purple: #8b5cf6;
+  --color-zenith-cyan: #00fff2;
+  --color-card-bg: rgba(8, 8, 12, 0.5);
+  --color-border-glass: rgba(255, 255, 255, 0.05);
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  
+  --animate-radar: radar-spin 4s linear infinite;
+  --animate-scan: scan-line 3s linear infinite;
+  --animate-border-flow: border-rotate 6s linear infinite;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  @keyframes radar-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  @keyframes scan-line {
+    0% { transform: translateY(-100%); opacity: 0; }
+    50% { opacity: 0.5; }
+    100% { transform: translateY(100%); opacity: 0; }
+  }
+  @keyframes border-rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  :root {
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+  }
+
+  body {
+    @apply bg-black text-white antialiased overflow-x-hidden;
+    background-image: 
+      radial-gradient(at 0% 0%, rgba(139, 92, 246, 0.05) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, rgba(0, 255, 242, 0.03) 0px, transparent 50%);
+  }
+}
+
+@layer utilities {
+  /* افکت هولوگرام واقعی */
+  .hologram-effect {
+    @apply relative overflow-hidden backdrop-blur-2xl border border-white/10;
+    background: linear-gradient(180deg, rgba(0, 255, 242, 0.03) 0%, rgba(139, 92, 246, 0.03) 100%);
+    box-shadow: 0 0 30px rgba(0, 255, 242, 0.05), inset 0 0 20px rgba(0, 255, 242, 0.02);
+  }
+
+  /* خط اسکنر هولوگرافیک */
+  .hologram-effect::after {
+    content: "";
+    @apply absolute inset-x-0 h-1 bg-gradient-to-r from-transparent via-zenith-cyan to-transparent opacity-20 pointer-events-none;
+    animation: scan-line 4s linear infinite;
+  }
+
+  /* حاشیه نوری متحرک نئونی */
+  .neon-glow-border {
+    @apply relative rounded-[32px] bg-black/40;
+  }
+
+  .neon-glow-border::before {
+    content: "";
+    @apply absolute -inset-[1px] rounded-[33px] pointer-events-none;
+    background: conic-gradient(from 0deg at 50% 50%, transparent 0%, var(--color-zenith-purple) 25%, transparent 50%, var(--color-zenith-cyan) 75%, transparent 100%);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    animation: border-rotate 8s linear infinite;
+  }
+
+  /* متن با لبه‌های لیزری */
+  .text-hologram {
+    @apply font-black uppercase italic tracking-tighter;
+    background: linear-gradient(to bottom, #fff 20%, rgba(255,255,255,0.2) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 15px rgba(0, 255, 242, 0.3));
+  }
+}
+
+@layer utilities {
+  .luxury-glass {
+    background: radial-gradient(120% 120% at 50% 10%, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0) 100%);
+    backdrop-filter: blur(50px);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.8);
+  }
+
+  .text-luxury-gradient {
+    background: linear-gradient(to bottom, #ffffff 30%, #555555 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .scanning-beam {
+    background: linear-gradient(to bottom, transparent, rgba(139, 92, 246, 0.1), transparent);
+    animation: scan 4s ease-in-out infinite;
+  }
+
+  @keyframes scan {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+  }
+}
+
+@layer utilities {
+  .neural-canvas {
+    background: radial-gradient(circle at center, #0a0a15 0%, #000000 100%);
+  }
+
+  .text-glow-white {
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 0 0 40px rgba(255, 255, 255, 0.2);
+  }
+
+  .glass-card-quantum {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0) 100%);
+    backdrop-filter: blur(80px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: inset 0 0 40px rgba(255, 255, 255, 0.02);
+  }
+
+  /* انیمیشن ذرات معلق در پس‌زمینه */
+  .floating-node {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: #fff;
+    border-radius: 50%;
+    opacity: 0.1;
+    filter: blur(1px);
+    animation: float 20s infinite linear;
+  }
+
+  @keyframes float {
+    from { transform: translateY(0) translateX(0); }
+    to { transform: translateY(-100vh) translateX(100px); }
+  }
+}
+
+@layer utilities {
+  .cv-preview-canvas {
+    background: #ffffff;
+    color: #000000;
+    box-shadow: 0 50px 100px -20px rgba(0,0,0,0.5);
+    position: relative;
+  }
+  
+  .cv-preview-canvas::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("https://transparenttextures.com");
+    opacity: 0.05;
+    pointer-events: none;
+  }
 }

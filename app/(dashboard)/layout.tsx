@@ -1,9 +1,9 @@
 // import type { Metadata } from "next";
 // import { Geist, Geist_Mono } from "next/font/google";
- import "./globals.css";
+//  import "./globals.css";
 // import { ThemeProvider } from "@/components/them-provider";
  import { Sidebar } from "@/components/sidebar";
-
+ import  {Navbar}  from "@/components/header";
  import { Providers } from "@/components/providers/session-provider";
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -56,13 +56,17 @@
 //     </html>
 //   );
 // }
-
+import { auth } from "@/auth";
 import { Toaster } from "sonner";
-const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
+import {Nav} from "@/components/layout/Navbar";
+import { BootSequence } from "@/components/layout/boot-sequence";
+const  DashboardLayout  = ({ children }: { children: React.ReactNode }) => {
+    
+    
   return (
     
-    <html className="h-full">
-      <body className="h-full relative bg-[#020205] text-white">
+    
+      <section className="h-full relative bg-[#020205] text-white">
         <Toaster
         theme="dark"
         position="bottom-right"
@@ -74,12 +78,27 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
             
           }
         }}/>
-          <Providers>{children}</Providers>
 
-    </body>
-    </html>
+      
+      <div className="hidden h-full md:flex md:w-72 md:flex-col md:fixed md:inset-y-0 z-50">
+        <Sidebar />
+      </div>
+
+    
+      <main className="md:pl-72 flex flex-col h-full">
+ 
+        <Nav/>
+        
+       
+        <div className="flex-1 overflow-y-auto relative p-8 h-full">
+           
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-purple-600/5 blur-[120px] -z-10" />
+           <BootSequence> {children}</BootSequence>
+        </div>
+      </main>
+    </section>
+    
   );
 };
 
 export default DashboardLayout;
-

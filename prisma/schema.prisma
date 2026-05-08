@@ -1,0 +1,125 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?  @db.Text
+  access_token       String?  @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?  @db.Text
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  password      String?
+  accounts      Account[]
+  Resume         Resume[]
+  job            Job[]
+  project       Project[]
+  roadmap       Roadmap[]
+  chatMessage   ChatMessage[]
+
+  bio           String?
+  skills        String[]
+  createdAt     DateTime  @default(now())
+}
+
+model Resume {
+  id            String    @id @default(cuid())
+  userId        String    
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  title         String    // مثلاً "Full Stack Developer Resume"
+  content       Json?     // ذخیره ساختاریافته رزومه (تجربیات، تحصیلات و ...)
+  rawText       String?   @db.Text // متن استخراج شده از فایل PDF برای آنالیز AI
+  
+  // آنالیز هوش مصنوعی
+  aiScore       Int?      @default(0)
+  aiFeedback    String?   @db.Text
+  
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([userId])
+}
+
+
+enum JobStatus {
+  WISHLIST
+  APPLIED
+  INTERVIEWING
+  OFFERED
+  REJECTED
+}
+
+model Job {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  
+  company     String
+  role        String
+  location    String?
+  salary      String?
+  status      JobStatus @default(WISHLIST)
+  logo        String?   // لینک لوگوی شرکت
+  
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([userId])
+}
+
+model Project {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  name        String
+  repoUrl     String?
+  techStack   String[]
+  aiImpact    Json?    // ذخیره امتیازات تفکیک شده
+  createdAt   DateTime @default(now())
+}
+
+
+model Roadmap {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id])
+  steps       Json     // ذخیره آرایه‌ای از گام‌ها [{title, desc, status}]
+  createdAt   DateTime @default(now())
+}
+
+model ChatMessage{
+  id      String   @id   @default(cuid())
+  userId   String
+  user     User  @relation(fields:[userId],references:[id])
+  role    String
+  content   String   @db.Text
+  createdAt  DateTime  @default(now())
+
+  @@index([userId])
+}
+
+
