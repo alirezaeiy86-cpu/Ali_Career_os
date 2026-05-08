@@ -91,6 +91,9 @@ export const analyzeResume = async (formData: FormData) => {
     // return { success: true, data: resume };
 
      const finalResult = await db.$transaction(async (tx) => {
+      if (!session.user?.id){
+        throw new Error("User dont exist")
+      }
       const newResume = await tx.resume.create({
         data: {
           userId: session.user.id,
