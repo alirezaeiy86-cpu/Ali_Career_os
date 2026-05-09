@@ -20,7 +20,7 @@ export default auth((req) => {
   if (isAuthRoute) {
     if (isLoggedIn) {
 
-      return Response.redirect(new URL("/dashboard", nextUrl));
+      return Response.redirect(new URL("/dashboard", req.url));
     }
     
     return; 
@@ -29,7 +29,7 @@ export default auth((req) => {
 
   if (!isLoggedIn && isDashboardPage) {
   //محافظت از دشبورد 
-    return Response.redirect(new URL("/login", nextUrl));
+    return Response.redirect(new URL("/login", req.url));
   }
 
   return;

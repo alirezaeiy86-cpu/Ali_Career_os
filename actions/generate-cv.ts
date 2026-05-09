@@ -4,7 +4,7 @@ import { db } from "@/lib/prisma";
 import { auth } from "@/auth";
 import { geminiModel } from "@/lib/gemini";
 
-// ۱. تابع اصلی برای ساخت رزومه اولیه از روی دیتابیس (گیت‌هاب و مهارت‌ها)
+
 export const generateSmartCV = async () => {
   const session = await auth();
   if (!session?.user?.id) return { error: "Unauthorized" };
@@ -37,7 +37,7 @@ export const generateSmartCV = async () => {
   }
 };
 
-// ۲. تابع "جلا دادن" (Magic Polish) برای وقتی که کاربر خودش متن می‌نویسد
+
 export const polishCVSection = async (section: string, content: string) => {
   if (!content || content.length < 5) return { error: "Content too short" };
 
@@ -71,7 +71,7 @@ export const polishCVSection = async (section: string, content: string) => {
 //   if (!session?.user?.id) return { error: "Unauthorized" };
 
 //   try {
-//     // ۱. دریافت تمام دارایی‌های فنی کاربر از دیتابیس
+//     
 //     const [skillsData, projects] = await Promise.all([
 //       db.resume.findFirst({ where: { userId: session.user.id }, orderBy: { createdAt: 'desc' } }),
 //       db.project.findMany({ where: { userId: session.user.id } })
