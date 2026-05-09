@@ -67,7 +67,7 @@ export const Nav = () => {
 
             {/* دکمه خروج استراتژیک */}
             <button 
-              onClick={() => signOut()}
+              onClick={() => signOut({callbackUrl:"/"})}
               className="p-2.5 rounded-xl bg-red-500/5 border border-red-500/10 text-red-500/40 hover:bg-red-500 hover:text-white transition-all active:scale-90 group"
             >
               <LogOut className="w-4 h-4 group-hover:rotate-12 transition-transform" />
