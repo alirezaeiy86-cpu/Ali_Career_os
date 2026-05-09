@@ -64,7 +64,9 @@ export const {
       }
       return session;
     },
+    
   },
+  trustHost:true
 });
 
 
