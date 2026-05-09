@@ -44,8 +44,80 @@ export default function CVBuilderPage() {
 
   return (
     <div className="min-h-screen flex flex-col gap-6 md:gap-8 p-4 md:p-6 lg:p-12 bg-black text-white relative font-sans overflow-x-hidden">
-      
-      <style dangerouslySetInnerHTML={{ __html: `
+                <style dangerouslySetInnerHTML={{ __html: `
+  @media print {
+    @page { size: A4; margin: 0; }
+    
+    html, body { 
+      background: white !important; 
+      height: auto !important; 
+      overflow: visible !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    
+    .no-print { display: none !important; }
+    body * { visibility: hidden !important; }
+    .cv-master-document, .cv-master-document * { visibility: visible !important; }
+
+    /* اصلاح شروع از صفحه اول */
+    .cv-master-document {
+      position: relative !important; /* تغییر از fixed به relative برای حل مشکل صفحه دوم */
+      width: 210mm !important;
+      height: auto !important;
+      min-height: 297mm !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      background: white !important;
+      color: black !important;
+      box-shadow: none !important;
+      border-radius: 0 !important;
+      display: block !important;
+    }
+
+    /* هدر مورد علاقه شما با اصلاح نمایش متن و عکس */
+     .print-header-black {
+            background-color: black !important;
+            -webkit-print-color-adjust: exact !important;
+            color: white !important;
+            display: flex !important;
+            width: 100% !important;
+          }
+
+
+    /* اصلاح بخش بدنه (تاریخچه و Technical DNA) */
+    .cv-master-document .grid {
+      display: flex !important;
+      flex-direction: row !important;
+      padding: 10mm 15mm !important;
+      gap: 10mm !important;
+    }
+
+    /* ستون تاریخچه */
+    .cv-master-document div[class*="lg:col-span-8"] {
+      width: 65% !important;
+    }
+
+    /* ستون Technical DNA بصورت لیست زیر هم */
+    .cv-master-document div[class*="lg:col-span-4"] {
+      width: 30% !important;
+      display: block !important;
+    }
+
+    /* اجبار اسکیل‌ها به زیر هم آمدن */
+    .cv-master-document div[class*="lg:col-span-4"] .grid,
+    .cv-master-document div[class*="lg:col-span-4"] .flex-wrap {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 2mm !important;
+    }
+
+    section { page-break-inside: avoid !important; }
+    input, textarea { border: none !important; background: transparent !important; color: inherit !important; }
+  }
+`}} />
+
+      {/* <style dangerouslySetInnerHTML={{ __html: `
         @media print {
           @page { size: A4; margin: 0; }
           body * { visibility: hidden !important; }
@@ -72,7 +144,7 @@ export default function CVBuilderPage() {
           input, textarea { border: none !important; background: transparent !important; color: inherit !important; }
           .no-print { display: none !important; }
         }
-      `}} />
+      `}} /> */}
 
       <div className="relative z-10 flex flex-col sm:flex-row justify-between items-center gap-4 border-b border-white/5 pb-10 no-print text-center sm:text-left">
         <h1 className="text-5xl md:text-7xl font-black tracking-tighter uppercase italic leading-none">

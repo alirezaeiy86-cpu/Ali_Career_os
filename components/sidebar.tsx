@@ -11,16 +11,16 @@ import {
   LayoutDashboard, Cpu, Compass, 
   Layers, Briefcase, Settings, 
   Sparkles, Zap, ChevronRight, 
-  LogOut
+  LogOut,AtomIcon,Building
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navigation = [
   
   { name: "Overview", href: "/dashboard", icon: LayoutDashboard },
-  { name: "AI Mentor", href: "/ai-mentor", icon:Cpu  },
-  { name: "CV Builder", href: "/cv-builder", icon:Cpu },
-  { name: "AI Analyst", href: "/ai-analyst", icon: Cpu },
+  { name: "AI Mentor", href: "/ai-mentor", icon:AtomIcon  },
+  { name: "CV Builder", href: "/cv-builder", icon:Building },
+  { name: "AI Analyst", href: "/ai-analyst", icon:  Cpu},
   { name: "Career Path", href: "/career-path", icon: Compass },
   { name: "Interview Couch", href: "/interview", icon: Cpu },
 
