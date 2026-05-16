@@ -242,10 +242,10 @@ export default function CVBuilderPage() {
                              <h4 className="text-[10px] md:text-[11px] font-black uppercase tracking-[0.5em] text-zinc-400">Technical DNA</h4>
                              <Plus size={14} className="no-print cursor-pointer hover:text-purple-600" onClick={() => setCvData({...cvData, skills: [...cvData.skills, "NEW NODE"]})} />
                           </div>
-                          <div className="flex flex-wrap gap-2">
+                          <div className="flex flex-wrap gap-2 w-full">
                              {cvData.skills?.map((s: string, i: number) => (
-                               <div key={i} className="group flex items-center gap-2 px-3 py-1 bg-zinc-100 text-[9px] md:text-[10px] font-black uppercase rounded relative">
-                                 <input value={s} onChange={e => { const up = [...cvData.skills]; up[i] = e.target.value; setCvData({...cvData, skills: up}); }} className="bg-transparent outline-none w-16 md:w-20" />
+                               <div key={i} className="group  w-full flex items-center justify-between px-4 py-2 bg-zinc-100 text-[9px] md:text-[10px] font-black uppercase rounded relative">
+                                 <input value={s} onChange={e => { const up = [...cvData.skills]; up[i] = e.target.value; setCvData({...cvData, skills: up}); }} className="bg-transparent outline-none w-24 h-8 md:w-20" />
                                  <X size={10} className="no-print cursor-pointer text-zinc-400 hover:text-red-500" onClick={() => setCvData({...cvData, skills: cvData.skills.filter((_:any, idx:number)=>idx!==i)})} />
                                </div>
                              ))}

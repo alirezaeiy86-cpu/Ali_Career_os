@@ -4,6 +4,7 @@ import { signIn } from "@/auth"; // This is from your setting of your auth
 import { LoginSchema } from "@/lib/validations/auth";
 import { AuthError } from "next-auth";
 import * as z from "zod";
+import {redirect} from "next/navigation"
 
 export const login = async (values: z.infer<typeof LoginSchema>) => {
   const validatedFields = LoginSchema.safeParse(values);
@@ -15,7 +16,7 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
     await signIn("credentials", {
       email,
       password,
-      redirectTo: "/dashboard",
+      redirect: false,
     });
   } catch (error) {
     if (error instanceof AuthError) {
@@ -26,5 +27,7 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
     }
     throw error;
   }
+
+  redirect("/dashboard");
 };
 

@@ -2,7 +2,7 @@
 
 import * as z from "zod";
 import bcrypt from "bcryptjs";
-import { db } from "@/lib/prisma"; // نام فایل دیتابیس خودت را چک کن (db یا prisma)
+import { db } from "@/lib/prisma";
 import { RegisterSchema } from "@/lib/validations/auth";
 import {uploadImage} from "@/lib/cloudinary";
 
